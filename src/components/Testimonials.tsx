@@ -9,7 +9,7 @@ const testimonials = [
     id: 1,
     name: "Sarah Ahmed",
     role: "Mother of Two",
-    image: "/images/testimonials/parent1.jpg",
+    image: "/parent1.png",
     review:
       "LittleNest made finding a trusted daycare so easy. We found the perfect center within a day.",
   },
@@ -17,7 +17,7 @@ const testimonials = [
     id: 2,
     name: "Emily Johnson",
     role: "Working Parent",
-    image: "/images/testimonials/parent2.jpg",
+    image: "/parent1.png",
     review:
       "The reviews helped us choose confidently. Our daughter loves her new preschool.",
   },
@@ -25,7 +25,7 @@ const testimonials = [
     id: 3,
     name: "Ayesha Rahman",
     role: "Parent",
-    image: "/images/testimonials/parent3.jpg",
+    image: "/parent1.png",
     review:
       "Excellent platform. Safe, verified and very easy to use. Highly recommended for every family.",
   },
