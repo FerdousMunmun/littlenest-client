@@ -1,3 +1,4 @@
+import FAQ from "@/components/FAQ";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Statistics from "@/components/Satistics";
@@ -14,6 +15,7 @@ export default function Home() {
         <HowItWorks/>
         <Statistics/>
         <Testimonials/>
+        <FAQ/>
       
     </div>
   );

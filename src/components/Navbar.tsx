@@ -48,10 +48,10 @@ const Navbar = () => {
 
           <div className="hidden md:flex gap-8 items-center">
             <Link href="/" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Home</Link>
-            <Link href="/all-facilities" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">All Facilities</Link>
+            <Link href="/child-care-centers" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Child Care Centers</Link>
             <Link href="/my-bookings" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">My Bookings</Link>
-            <Link href="/add-facility" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Add Facility</Link>
-            <Link href="/manage-facilities" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Manage My Facilities</Link>
+            <Link href="/add-child-care-centers" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Manage My Centers</Link>
+            <Link href="/Manage-center" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">My Profile</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
