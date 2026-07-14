@@ -6,7 +6,7 @@ import { getMyBookings } from "@/services/booking";
 import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
-import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
 
 type Booking = {
@@ -20,39 +20,42 @@ type Booking = {
 };
 
 export default function MyBookingsPage() {
+  const router = useRouter();
   const { data: session } = authClient.useSession();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
 
+  
+
+ useEffect(() => {
   if (!session) {
-  toast.error("Please login first");
-  Router.push("/login");
-  return;
-}
+    toast.error("Please login first");
+    router.push("/login");
+    return;
+  }
 
-if (session.user.role !== "user") {
-  toast.error("Access Denied");
-  router.push("/");
-  return;
-}
+  if (session.user.role !== "user") {
+    toast.error("Access Denied");
+    router.push("/");
+    return;
+  }
 
-  useEffect(() => {
-    async function loadBookings() {
-      if (!session?.user?.email) return;
+  async function loadBookings() {
+    if (!session.user.email) return;
 
-      try {
-        const data = await getMyBookings(session.user.email);
-        setBookings(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+    try {
+      const data = await getMyBookings(session.user.email);
+      setBookings(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    loadBookings();
-  }, [session]);
+  loadBookings();
+}, [session, router]);
 
   if (loading) {
     return (

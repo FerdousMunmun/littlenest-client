@@ -1,6 +1,7 @@
 "use client";
 import { FcGoogle } from "react-icons/fc";
 import { Card, Separator } from "@heroui/react";
+import { useState } from "react";
 
 import {
   Button,
@@ -14,8 +15,10 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { uploadImage } from "@/services/image";
 
 const RagistrationPage = () => {
+  const [imageFile, setImageFile] = useState<File | null>(null)
   const onSubmit = async ( e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -27,11 +30,17 @@ const user = Object.fromEntries(formData.entries()) as {
   email: string;
   password: string;
 };
+
+let imageUrl = "";
+
+if (imageFile) {
+  imageUrl = await uploadImage(imageFile);
+}
     const { data, error } = await authClient.signUp.email({
       email: user.email,
       password: user.password,
       name: user.name,
-      image: user.image,
+     image: imageUrl,
     });
 
     if (data) {
@@ -65,11 +74,21 @@ const user = Object.fromEntries(formData.entries()) as {
             <FieldError />
           </TextField>
 
-          <TextField name="image" type="url">
-            <Label>Image URL</Label>
-            <Input placeholder="Image url" />
-            <FieldError />
-          </TextField>
+         <div className="w-full">
+  <label className="block mb-2 font-medium">
+    Profile Image
+  </label>
+
+  <input
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    setImageFile(e.target.files?.[0] || null)
+  }
+  className="w-full border rounded-lg p-2"
+/>
+</div>
+          
 
           <TextField
             isRequired
