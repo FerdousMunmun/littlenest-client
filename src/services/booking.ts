@@ -23,3 +23,18 @@ export async function getMyBookings(email: string) {
 
   return res.json();
 }
+
+
+export async function checkBooking(
+  userEmail: string,
+  centerId: string
+) {
+  const res = await fetch(
+    `${API}/bookings/check?userEmail=${userEmail}&centerId=${centerId}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  return res.json();
+}

@@ -6,9 +6,11 @@ import {
   getMyCenters,
   createCenter,
     updateCenter,
+      deleteCenter,
 } from "@/services/center";
 
 import { uploadImage } from "@/services/image";
+import toast from "react-hot-toast";
 
 export default function ManageMyCentersPage() {
   const { data: session } = authClient.useSession();
@@ -31,6 +33,8 @@ const [isOpen, setIsOpen] = useState(false);
 
 const [isEditMode, setIsEditMode] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+const [deleteOpen, setDeleteOpen] = useState(false);
   useEffect(() => {
     async function loadCenters() {
       if (!session?.user?.email) return;
@@ -144,6 +148,36 @@ const handleImageUpload = async (
     alert("Something went wrong!");
   }
 };
+const handleDelete = async () => {
+  if (!deleteId) return;
+
+  try {
+    toast.loading("Deleting center...", {
+      id: "delete-center",
+    });
+
+    await deleteCenter(deleteId);
+
+    const data = await getMyCenters(session!.user.email);
+    setCenters(data);
+
+    toast.success("Center deleted successfully!", {
+      id: "delete-center",
+    });
+
+    setDeleteOpen(false);
+    setDeleteId(null);
+  } catch (error) {
+    console.error(error);
+
+    toast.error("Delete failed!", {
+      id: "delete-center",
+    });
+  }
+}
+
+
+
 
   if (loading) {
     return (
@@ -225,18 +259,28 @@ const handleImageUpload = async (
   🪑 Available Seats: {center.availableSeats}
 </p>
 
+ <p className="text-gray-600 mt-3">
+    {center.description}
+  </p>
+
                 <div className="flex gap-3 mt-6">
 
                   <button
   onClick={() => handleEdit(center)}
-  className="flex-1 bg-gray-400 text-white py-2 rounded-lg"
+  className="flex-1 bg-gray-400 hover:bg-gray-600 text-white py-2 rounded-lg"
 >
   Update
 </button>
 
-                  <button className="flex-1 bg-rose-400 text-white py-2 rounded-lg">
-                    Delete
-                  </button>
+         <button
+  onClick={() => {
+    setDeleteId(center._id);
+    setDeleteOpen(true);
+  }}
+  className="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+>
+  Delete
+</button>
 
                 </div>
 
@@ -289,7 +333,7 @@ const handleImageUpload = async (
       className="w-full border rounded-lg p-3"
     />
 
-    {/* 👇 এখানেই Step 5 */}
+    
     {uploading && (
       <p className="text-pink-500">
         Uploading image...
@@ -340,12 +384,48 @@ const handleImageUpload = async (
           Cancel
         </button>
 
-     <button
+   <button
   onClick={handleSaveCenter}
   className="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600"
 >
-  Save Center
+  {isEditMode ? "Update Center" : "Save Center"}
 </button>
+
+      </div>
+
+    </div>
+  </div>
+)}
+{deleteOpen && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-xl">
+
+      <h2 className="text-2xl font-bold text-red-600">
+        Delete Center
+      </h2>
+
+      <p className="text-gray-600 mt-3">
+        Are you sure you want to delete this child care center?
+      </p>
+
+      <div className="flex justify-end gap-3 mt-8">
+
+        <button
+          onClick={() => {
+            setDeleteOpen(false);
+            setDeleteId(null);
+          }}
+          className="px-5 py-2 border rounded-lg hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={handleDelete}
+          className="px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+        >
+          Delete
+        </button>
 
       </div>
 

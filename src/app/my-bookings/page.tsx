@@ -6,6 +6,7 @@ import { getMyBookings } from "@/services/booking";
 import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
 
+
 type Booking = {
   _id: string;
   centerId: string;

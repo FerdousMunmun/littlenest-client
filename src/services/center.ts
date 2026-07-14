@@ -60,3 +60,12 @@ export async function updateCenter(id: string, data: any) {
 
   return res.json();
 }
+
+
+export async function deleteCenter(id: string) {
+  const res = await fetch(`${API}/centers/${id}`, {
+    method: "DELETE",
+  });
+
+  return res.json();
+}
