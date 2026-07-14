@@ -17,6 +17,7 @@ const Navbar = () => {
     data: session,
   } = authClient.useSession();
   const user = session?.user;
+  const isAdmin = user?.role === "admin";
 
   const handleSignOut = async (): Promise<void> => {
     await authClient.signOut();
@@ -49,9 +50,24 @@ const Navbar = () => {
           <div className="hidden md:flex gap-8 items-center">
             <Link href="/" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Home</Link>
             <Link href="/child-care-centers" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Child Care Centers</Link>
-            <Link href="/my-bookings" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Bookings</Link>
-            <Link href="/manage-my-centers" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Manage My Centers</Link>
-            <Link href="/Manage-center" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Profile</Link>
+            {!isAdmin && (
+  <Link
+    href="/my-bookings"
+    className="font-medium text-slate-700 hover:text-rose-600 transition-colors"
+  >
+    My Bookings
+  </Link>
+)}
+
+{isAdmin && (
+  <Link
+    href="/manage-my-centers"
+    className="font-medium text-slate-700 hover:text-rose-600 transition-colors"
+  >
+    Manage Centers
+  </Link>
+)}
+            <Link href="/my-profile" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Profile</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
@@ -88,11 +104,10 @@ const Navbar = () => {
                     <p className="font-bold text-sm">Welcome back!</p>
 
                   </div>
-                  <Link href="/Add-Facility" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
-                    <LayoutDashboard className="w-4 h-4" /> Add Facility
-                  </Link>
-                  <Link href="/manage-facilities" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
-                    <User className="w-4 h-4" /> Manage My Facilities
+                  <Link href="/child-care-centers" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
+                    <LayoutDashboard className="w-4 h-4" /> Child Care Centers</Link>
+                  <Link href="/manage-my-centers" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
+                    <User className="w-4 h-4" />  Manage Centers
                   </Link>
                   <Button onClick={handleSignOut} className="px-4 py-2 text-sm text-rose-400 hover:bg-red-50 flex items-center gap-3 transition-colors text-left">
                     <LogOut className="w-4 h-4" /> Log Out
