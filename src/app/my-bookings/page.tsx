@@ -120,7 +120,7 @@ export default function MyBookingsPage() {
                   href={`/child-care-centers/${booking.centerId}`}
                   className="block mt-6"
                 >
-                  <button className="w-full bg-pink-500 text-white py-3 rounded-xl hover:bg-pink-600">
+                  <button className="w-full bg-rose-400 text-white py-3 rounded-xl hover:bg-pink-600">
                     View Center
                   </button>
                 </Link>

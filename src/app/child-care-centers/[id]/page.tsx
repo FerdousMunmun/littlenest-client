@@ -33,12 +33,12 @@ export default async function CenterDetailsPage({ params }: Props) {
           <div className="space-y-4 text-gray-600">
 
             <div className="flex items-center gap-2">
-              <MapPin className="text-pink-500" size={20} />
+              <MapPin className="text-rose-400" size={20} />
               <span>{center.location}</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <Users className="text-pink-500" size={20} />
+              <Users className="text-rose-400" size={20} />
               <span>{center.availableSeats} Seats Available</span>
             </div>
 

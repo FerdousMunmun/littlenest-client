@@ -47,17 +47,17 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex gap-8 items-center">
-            <Link href="/" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Home</Link>
-            <Link href="/child-care-centers" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Child Care Centers</Link>
-            <Link href="/my-bookings" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">My Bookings</Link>
-            <Link href="/add-child-care-centers" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Manage My Centers</Link>
-            <Link href="/Manage-center" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">My Profile</Link>
+            <Link href="/" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Home</Link>
+            <Link href="/child-care-centers" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Child Care Centers</Link>
+            <Link href="/my-bookings" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Bookings</Link>
+            <Link href="/manage-my-centers" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Manage My Centers</Link>
+            <Link href="/Manage-center" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Profile</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-4">
             {!user ? (
               <>
-                <Link href="/login" className="font-medium text-slate-700 hover:text-orange-600 transition-colors">Login</Link>
+                <Link href="/login" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Login</Link>
                 <Link href="/registration">
 
                   <Button className="font-bold rounded-full px-8 shadow-lg shadow-orange-600/20 bg-rose-400">
@@ -94,7 +94,7 @@ const Navbar = () => {
                   <Link href="/manage-facilities" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
                     <User className="w-4 h-4" /> Manage My Facilities
                   </Link>
-                  <Button onClick={handleSignOut} className="px-4 py-2 text-sm text-red-500 hover:bg-red-50 flex items-center gap-3 transition-colors text-left">
+                  <Button onClick={handleSignOut} className="px-4 py-2 text-sm text-rose-400 hover:bg-red-50 flex items-center gap-3 transition-colors text-left">
                     <LogOut className="w-4 h-4" /> Log Out
                   </Button>
                 </div>
@@ -130,7 +130,7 @@ const Navbar = () => {
 
             <div className="flex flex-col gap-2">
               <p className="px-4 text-xs font-bold text-muted-foreground uppercase tracking-wider">Account</p>
-              <Button onClick={handleSignOut} className="block w-full text-left px-4 py-3 text-base font-medium text-red-500 hover:bg-red-50 rounded-xl">Log Out</Button>
+              <Button onClick={handleSignOut} className="block w-full text-left px-4 py-3 text-base font-medium text-rose-400 hover:bg-rose-600 rounded-xl">Log Out</Button>
             </div>
 
           </div>

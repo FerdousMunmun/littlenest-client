@@ -10,7 +10,7 @@ const Hero = () => {
 
           {/* Left Content */}
           <div>
-            <span className="inline-block px-4 py-1 rounded-full bg-rose-100 text-rose-600 font-medium mb-5">
+            <span className="inline-block px-4 py-1 rounded-full bg-rose-100 text-rose-500 font-medium mb-5">
               Trusted Child Care Platform
             </span>
 

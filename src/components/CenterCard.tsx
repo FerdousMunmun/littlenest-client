@@ -63,7 +63,7 @@ export default function CenterCard({ center }: CenterCardProps) {
 
         {/* Button */}
         <Link href={`/child-care-centers/${center._id}`}>
-  <Button className="w-full bg-pink-500 text-white">
+  <Button className="w-full bg-rose-400 hover:bg-rose-600 text-white">
     View Details
   </Button>
 </Link>
