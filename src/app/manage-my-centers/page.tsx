@@ -11,9 +11,11 @@ import {
 
 import { uploadImage } from "@/services/image";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function ManageMyCentersPage() {
   const { data: session } = authClient.useSession();
+  const router = useRouter();
 
   const [centers, setCenters] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,20 +37,45 @@ const [isEditMode, setIsEditMode] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 const [deleteOpen, setDeleteOpen] = useState(false);
+
+
+if (!session) {
+  toast.error("Please login first");
+  router.push("/login");
+  return;
+}
+
+if (session.user.role !== "admin") {
+  toast.error("Access Denied");
+  router.push("/");
+  return;
+}
   useEffect(() => {
-    async function loadCenters() {
-      if (!session?.user?.email) return;
 
-      try {
-        const data = await getMyCenters(session.user.email);
-        setCenters(data);
-      } finally {
-        setLoading(false);
-      }
+  if (!session) return;
+
+  if (session.user.role !== "admin") {
+    
+    toast.error("Access Denied");
+    router.push("/");
+    return;
+  }
+
+  async function loadCenters() {
+
+    if (!session.user.email) return;
+
+    try {
+      const data = await getMyCenters(session.user.email);
+      setCenters(data);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    loadCenters();
-  }, [session]);
+  loadCenters();
+
+}, [session]);
 
 
     const handleChange = (

@@ -16,8 +16,11 @@ const Navbar = () => {
   const {
     data: session,
   } = authClient.useSession();
+  
   const user = session?.user;
+  console.log("SESSION USER =>", session?.user);
   const isAdmin = user?.role === "admin";
+  const isUser = user?.role === "user";
 
   const handleSignOut = async (): Promise<void> => {
     await authClient.signOut();
@@ -50,21 +53,15 @@ const Navbar = () => {
           <div className="hidden md:flex gap-8 items-center">
             <Link href="/" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Home</Link>
             <Link href="/child-care-centers" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">Child Care Centers</Link>
-            {!isAdmin && (
-  <Link
-    href="/my-bookings"
-    className="font-medium text-slate-700 hover:text-rose-600 transition-colors"
-  >
+           {isUser && (
+  <Link href="/my-bookings">
     My Bookings
   </Link>
 )}
 
 {isAdmin && (
-  <Link
-    href="/manage-my-centers"
-    className="font-medium text-slate-700 hover:text-rose-600 transition-colors"
-  >
-    Manage Centers
+  <Link href="/manage-my-centers">
+    Manage My Centers
   </Link>
 )}
             <Link href="/my-profile" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Profile</Link>
@@ -83,7 +80,7 @@ const Navbar = () => {
               </>
             ) : (
 
-              <div className="relative group">
+              <div className="relative group pb-3">
                 <button className="flex items-center gap-3 p-1 rounded-full hover:bg-muted transition-colors border border-transparent hover:border-border">
                   <img
                     width={40}
@@ -99,19 +96,54 @@ const Navbar = () => {
 
                   </div>
                 </button>
-                <div className="absolute right-0 top-12 w-56 bg-white border border-slate-200 rounded-2xl shadow-2xl hidden group-hover:flex flex-col py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="px-4 py-3 border-b border-slate-100">
-                    <p className="font-bold text-sm">Welcome back!</p>
+              <div className="absolute right-0 top-full mt-1 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50 overflow-hidden">
+                 <div className="flex items-center gap-4 p-5 border-b">
 
-                  </div>
-                  <Link href="/child-care-centers" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
-                    <LayoutDashboard className="w-4 h-4" /> Child Care Centers</Link>
-                  <Link href="/manage-my-centers" className="px-4 py-2 text-sm hover:bg-muted flex items-center gap-3 transition-colors">
-                    <User className="w-4 h-4" />  Manage Centers
-                  </Link>
-                  <Button onClick={handleSignOut} className="px-4 py-2 text-sm text-rose-400 hover:bg-red-50 flex items-center gap-3 transition-colors text-left">
-                    <LogOut className="w-4 h-4" /> Log Out
-                  </Button>
+  <img
+    src={user?.image || "/avatar.png"}
+    alt={user?.name || "User"}
+    className="w-14 h-14 rounded-full object-cover border-2 border-pink-400"
+  />
+
+  <div>
+    <h3 className="font-bold">
+      {user?.name}
+    </h3>
+
+    <p className="text-sm text-gray-500">
+      {user?.email}
+    </p>
+
+    <span className="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">
+      {user?.role}
+    </span>
+  </div>
+
+</div>
+                  {/* dropdown menu */}
+                 {isAdmin && (
+  <Link href="/manage-my-centers" className="flex items-center gap-3 px-5 py-3 hover:bg-pink-50 transition">
+    <User className="w-4 h-4  ml-2" />
+    Manage Centers
+  </Link>
+)}
+
+{isUser && (
+  <Link href="/my-bookings"  className="flex items-center gap-3 px-5 py-3 hover:bg-pink-50 transition">
+    <User className="w-4 h-4" />
+    My Bookings
+  </Link>
+)}
+   {/* dropdown menu */}
+                 <div className="flex justify-between p-3 border-t">
+  <Button
+    onClick={handleSignOut}
+    className="text-black"
+  >
+    <LogOut className="w-4 h-4" />
+    Log Out
+  </Button>
+</div>
                 </div>
               </div>
             )}
@@ -129,9 +161,10 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden px-4 pt-2 pb-6 space-y-2 bg-white border-b border-slate-200 animate-in slide-in-from-top duration-300">
           <Link href="/" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Home</Link>
-          <Link href="/all-facilities" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">All Facilities</Link>
-          <Link href="/add-facility" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Add Facility</Link>
-          <Link href="/manage-facilities" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Manage My Facility</Link>
+          <Link href="/chid-care-centers" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">All Child Care Centers</Link>
+          <Link href="/my-bookings" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">My Bookings</Link>
+          <Link href="/manage-my-centers" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Manage My Facility</Link>
+          <Link href="/my-profile" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl"> My Profile</Link>
           <div className="pt-4 border-t border-border mt-4">
 
             <div className="grid grid-cols-2 gap-4">

@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import CenterCard from "@/components/CenterCard";
 import { getCenters } from "@/services/center";
 import { Center } from "@/types/center";
-import { useRouter } from "next/navigation";
+
 
 export default async function ChildCareCentersPage() {
   const centers: Center[] = await getCenters();

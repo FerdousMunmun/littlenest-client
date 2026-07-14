@@ -5,6 +5,8 @@ import { authClient } from "@/lib/auth-client";
 import { getMyBookings } from "@/services/booking";
 import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
+import toast from "react-hot-toast";
+import { Router } from "next/router";
 
 
 type Booking = {
@@ -22,6 +24,18 @@ export default function MyBookingsPage() {
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+
+  if (!session) {
+  toast.error("Please login first");
+  Router.push("/login");
+  return;
+}
+
+if (session.user.role !== "user") {
+  toast.error("Access Denied");
+  router.push("/");
+  return;
+}
 
   useEffect(() => {
     async function loadBookings() {
