@@ -116,7 +116,7 @@ const Footer = () => {
               Contact
             </h3>
 
-            <div className="space-y-4 text-slate-300">
+            {/* <div className="space-y-4 text-slate-300">
 
               <div className="flex items-center gap-3">
                 <MapPin size={18} />
@@ -133,7 +133,39 @@ const Footer = () => {
                 <p>support@littlenest.com</p>
               </div>
 
-            </div>
+            </div> */}
+
+
+
+            <div className="space-y-4 text-slate-300">
+
+  
+   <a href="https://www.google.com/maps/search/?api=1&query=Dhaka,Bangladesh"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-3 hover:text-rose-400 transition"
+  >
+    <MapPin size={18} />
+    <p>Dhaka, Bangladesh</p>
+  </a>
+
+  
+    <a href="tel:+8801234567890"
+    className="flex items-center gap-3 hover:text-rose-400 transition"
+  >
+    <Phone size={18} />
+    <p>+880 1234-567890</p>
+  </a>
+
+  
+    <a href="mailto:support@littlenest.com"
+    className="flex items-center gap-3 hover:text-rose-400 transition"
+  >
+    <Mail size={18} />
+    <p>support@littlenest.com</p>
+  </a>
+
+</div>
           </div>
 
         </div>
