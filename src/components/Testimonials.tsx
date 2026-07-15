@@ -17,7 +17,7 @@ const testimonials = [
     id: 2,
     name: "Emily Johnson",
     role: "Working Parent",
-    image: "/parent1.png",
+    image: "/parent2.jpg",
     review:
       "The reviews helped us choose confidently. Our daughter loves her new preschool.",
   },
@@ -25,7 +25,7 @@ const testimonials = [
     id: 3,
     name: "Ayesha Rahman",
     role: "Parent",
-    image: "/parent1.png",
+    image: "/parent3.jpg",
     review:
       "Excellent platform. Safe, verified and very easy to use. Highly recommended for every family.",
   },
