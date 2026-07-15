@@ -21,7 +21,10 @@ type Booking = {
 
 export default function MyBookingsPage() {
   const router = useRouter();
-  const { data: session } = authClient.useSession();
+  const {
+  data: session,
+  isPending,
+} = authClient.useSession();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,6 +32,7 @@ export default function MyBookingsPage() {
   
 
  useEffect(() => {
+  if (isPending) return;
   if (!session) {
     toast.error("Please login first");
     router.push("/login");
@@ -59,7 +63,7 @@ export default function MyBookingsPage() {
   loadBookings();
 }, [session, router]);
 
-  if (loading) {
+if (isPending || loading)  {
     return (
       <div className="py-24 text-center text-xl font-semibold">
         Loading...
