@@ -207,7 +207,7 @@ export default function MyProfilePage() {
                                     </Link>
                                 ) : (
                                     <Link href="/manage-my-centers">
-                                        <Button className="mt-8 bg-gray-600 text-white rounded-lg px-8 py-2">
+                                        <Button className=" bg-gray-600 text-white rounded-lg px-8 py-2">
                                             Manage Centers
                                         </Button>
                                     </Link>
