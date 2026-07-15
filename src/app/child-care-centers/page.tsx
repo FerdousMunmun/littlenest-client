@@ -1,14 +1,38 @@
+
+"use client";
 import { Input } from "@heroui/react";
 import { Search } from "lucide-react";
 
 import CenterCard from "@/components/CenterCard";
 import { getCenters } from "@/services/center";
 import { Center } from "@/types/center";
+import { useEffect, useState } from "react";
 
 
-export default async function ChildCareCentersPage() {
-  const centers: Center[] = await getCenters();
+export default function ChildCareCentersPage() {
 
+  const [centers, setCenters] = useState<Center[]>([]);
+  const [search, setSearch] = useState("");
+  const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    async function loadCenters() {
+      const data = await getCenters();
+      setCenters(data);
+    }
+
+    loadCenters();
+  }, []);
+
+    const filteredCenters = centers.filter((center) => {
+    const matchesSearch =
+      center.name.toLowerCase().includes(search.toLowerCase());
+
+    const matchesLocation =
+      location === "" || center.location === location;
+
+    return matchesSearch && matchesLocation;
+  });
   return (
     <section className="max-w-7xl mx-auto px-4 py-16">
       {/* Heading */}
@@ -31,11 +55,25 @@ export default async function ChildCareCentersPage() {
       {/* Search */}
       <div className="max-w-xl mx-auto mb-12">
         <Input
-          placeholder="Search child care center..."
-         
-          radius="lg"
-        />
+  placeholder="Search child care center..."
+  radius="lg"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+/>
       </div>
+      <div className="max-w-xl mx-auto mb-8">
+  <select
+    value={location}
+    onChange={(e) => setLocation(e.target.value)}
+    className="w-full rounded-lg border p-3"
+  >
+    <option value="">All Locations</option>
+    <option value="Dhaka">Dhaka</option>
+    <option value="Chattogram">Chattogram</option>
+    <option value="Sylhet">Sylhet</option>
+    <option value="Rajshahi">Rajshahi</option>
+  </select>
+</div>
 
       {/* Cards */}
       {centers.length === 0 ? (
@@ -50,7 +88,7 @@ export default async function ChildCareCentersPage() {
         </div>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {centers.map((center) => (
+          {filteredCenters.map((center) => (
             <CenterCard
               key={center._id}
               center={center}

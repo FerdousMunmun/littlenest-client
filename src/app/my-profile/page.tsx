@@ -6,10 +6,42 @@ import { authClient } from "@/lib/auth-client";
 import { CalendarDays, Mail, ShieldCheck, User } from "lucide-react";
 import { useState } from "react";
 
-
+import { updateProfile } from "@/services/profile";
+import { uploadImage } from "@/services/image";
+import toast from "react-hot-toast";
 export default function MyProfilePage() {
 
     const [openEdit, setOpenEdit] = useState(false);
+    const [name, setName] = useState("");
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const handleUpdateProfile = async () => {
+        try {
+            let imageUrl = user?.image;
+
+            if (imageFile) {
+                imageUrl = await uploadImage(imageFile);
+            }
+
+            const result = await updateProfile(user!.id, {
+                name,
+                image: imageUrl,
+            });
+
+            if (result.modifiedCount > 0) {
+                toast.success("Profile Updated Successfully");
+
+                setOpenEdit(false);
+
+                window.location.reload();
+            } else {
+                toast.error("Nothing Updated");
+            }
+        } catch (error) {
+            console.log(error);
+
+            toast.error("Update Failed");
+        }
+    };
     const { data: session } = authClient.useSession();
 
     const user = session?.user;
@@ -162,7 +194,10 @@ export default function MyProfilePage() {
 
                         <div className="mt-8 flex justify-center">
                             <Button
-                                onPress={() => setOpenEdit(true)}
+                                onPress={() => {
+                                    setName(user?.name || "");
+                                    setOpenEdit(true);
+                                }}
                                 className="bg-black text-white rounded-lg px-8 py-2"
                             >
                                 Edit Profile
@@ -173,7 +208,65 @@ export default function MyProfilePage() {
                 </div>
 
             </div>
+            {openEdit && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+                    <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
 
+                        <h2 className="text-2xl font-bold mb-6">
+                            Edit Profile
+                        </h2>
+
+                        <div className="space-y-4">
+
+                            <div>
+                                <label className="block mb-2 font-medium">
+                                    Full Name
+                                </label>
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="w-full rounded-lg border p-3 outline-none focus:border-pink-500"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block mb-2 font-medium">
+                                    Profile Image
+                                </label>
+
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        setImageFile(e.target.files?.[0] || null)
+                                    }
+                                    className="w-full rounded-lg border p-2"
+                                />
+                            </div>
+
+                        </div>
+
+                        <div className="mt-8 flex justify-end gap-3">
+
+                            <button
+                                onClick={() => setOpenEdit(false)}
+                                className="rounded-lg border px-5 py-2"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                onClick={handleUpdateProfile}
+                                className="rounded-lg bg-pink-500 px-5 py-2 text-white"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            )}
 
 
         </div>
