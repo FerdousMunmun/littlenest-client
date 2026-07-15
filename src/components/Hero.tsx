@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="bg-gradient-to-b from-rose-50 via-white to-white">
+    <section className="relative h-[70vh] flex items-center">
       <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 min-h-[70vh] flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
@@ -28,7 +29,7 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/centers">
+              <Link href="/child-care-centers">
                 <Button
                   size="lg"
                   className="bg-rose-500 text-white font-semibold px-8"
@@ -39,11 +40,9 @@ const Hero = () => {
 
               <Link href="/register">
                 <Button
-                  size="lg"
-                  variant="bordered"
-                  className="border-rose-500 text-rose-500 px-8"
+                  className="transition hover:scale-105"
                 >
-                  Become a Provider
+                  Get Started
                 </Button>
               </Link>
             </div>
@@ -95,6 +94,9 @@ const Hero = () => {
 
         </div>
       </div>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+  <ChevronDown size={35} />
+</div>
     </section>
   );
 };

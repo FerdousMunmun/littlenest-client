@@ -1,10 +1,12 @@
 const API = process.env.NEXT_PUBLIC_API_URL;
-
+import { authClient } from "@/lib/auth-client";
 export async function createBooking(data: any) {
+   const { data: token } = await authClient.token();
   const res = await fetch(`${API}/bookings`, {
     method: "POST",
-    headers: {
+     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${token?.token}`,
     },
     body: JSON.stringify(data),
   });

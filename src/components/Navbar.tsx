@@ -64,6 +64,7 @@ const Navbar = () => {
     Manage My Centers
   </Link>
 )}
+ <Link href="/all-facilities" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">All Facilities</Link>
             <Link href="/my-profile" className="font-medium text-slate-700 hover:text-rose-600 transition-colors">My Profile</Link>
           </div>
 
@@ -161,9 +162,9 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden px-4 pt-2 pb-6 space-y-2 bg-white border-b border-slate-200 animate-in slide-in-from-top duration-300">
           <Link href="/" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Home</Link>
-          <Link href="/chid-care-centers" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">All Child Care Centers</Link>
+          <Link href="/chid-care-centers" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl"> Child Care Centers</Link>
           <Link href="/my-bookings" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">My Bookings</Link>
-          <Link href="/manage-my-centers" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Manage My Facility</Link>
+          <Link href="/manage-my-centers" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">Manage My Center</Link>
           <Link href="/my-profile" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl"> My Profile</Link>
           <div className="pt-4 border-t border-border mt-4">
 

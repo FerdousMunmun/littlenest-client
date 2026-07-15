@@ -1,6 +1,8 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { jwt } from "better-auth/plugins";
+
 const client = new MongoClient(process.env.MONGO_DB_URI!)
 const db = client.db("littlenest_db");
 export const auth = betterAuth({
@@ -16,7 +18,12 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-
+   socialProviders: {
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID as string,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+  },
+},
   user: {
     additionalFields: {
       image: {
@@ -31,4 +38,15 @@ export const auth = betterAuth({
 },
     },
   },
+session:{
+  cookieCache:{
+    enabled:true,
+    strategy:"jwt",
+    maxAge:7*24*68*60
+
+  }
+},
+  plugins:[
+    jwt()
+  ]
 });

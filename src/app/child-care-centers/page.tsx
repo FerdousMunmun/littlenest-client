@@ -14,6 +14,9 @@ export default function ChildCareCentersPage() {
   const [centers, setCenters] = useState<Center[]>([]);
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+const itemsPerPage = 8
 
   useEffect(() => {
     async function loadCenters() {
@@ -23,16 +26,39 @@ export default function ChildCareCentersPage() {
 
     loadCenters();
   }, []);
+// 👇 এখানে
 
+
+useEffect(() => {
+  setCurrentPage(1);
+}, [search, location]);
+const locations = [
+  ...new Set(
+    centers.map((center) => {
+      return center.location.split(",").pop()?.trim() || "";
+    })
+  ),
+];
     const filteredCenters = centers.filter((center) => {
     const matchesSearch =
       center.name.toLowerCase().includes(search.toLowerCase());
 
-    const matchesLocation =
-      location === "" || center.location === location;
+   const matchesLocation =
+  location === "" ||
+  center.location.toLowerCase().includes(location.toLowerCase());
 
     return matchesSearch && matchesLocation;
   });
+
+
+  const totalPages = Math.ceil(filteredCenters.length / itemsPerPage);
+
+const startIndex = (currentPage - 1) * itemsPerPage;
+
+const paginatedCenters = filteredCenters.slice(
+  startIndex,
+  startIndex + itemsPerPage
+);
   return (
     <section className="max-w-7xl mx-auto px-4 py-16">
       {/* Heading */}
@@ -62,17 +88,19 @@ export default function ChildCareCentersPage() {
 />
       </div>
       <div className="max-w-xl mx-auto mb-8">
-  <select
-    value={location}
-    onChange={(e) => setLocation(e.target.value)}
-    className="w-full rounded-lg border p-3"
-  >
-    <option value="">All Locations</option>
-    <option value="Dhaka">Dhaka</option>
-    <option value="Chattogram">Chattogram</option>
-    <option value="Sylhet">Sylhet</option>
-    <option value="Rajshahi">Rajshahi</option>
-  </select>
+ <select
+  value={location}
+  onChange={(e) => setLocation(e.target.value)}
+  className="w-full rounded-lg border p-3"
+>
+  <option value="">All Locations</option>
+
+  {locations.map((loc) => (
+    <option key={loc} value={loc}>
+      {loc}
+    </option>
+  ))}
+</select>
 </div>
 
       {/* Cards */}
@@ -87,15 +115,51 @@ export default function ChildCareCentersPage() {
           </p>
         </div>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredCenters.map((center) => (
-            <CenterCard
-              key={center._id}
-              center={center}
-            />
-          ))}
-        </div>
-      )}
+  <>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {paginatedCenters.map((center) => (
+        <CenterCard
+          key={center._id}
+          center={center}
+        />
+      ))}
+    </div>
+
+    {totalPages > 1 && (
+      <div className="flex justify-center items-center gap-3 mt-12">
+        <button
+          onClick={() => setCurrentPage((prev) => prev - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 rounded-lg border disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`w-10 h-10 rounded-lg font-semibold transition ${
+              currentPage === index + 1
+                ? "bg-rose-500 text-white"
+                : "border hover:bg-gray-100"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 rounded-lg border disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
+    )}
+  </>
+)}
     </section>
   );
 }

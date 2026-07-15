@@ -1,7 +1,10 @@
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
+import { authClient } from "@/lib/auth-client";
+
 export async function getCenters() {
+   
   const res = await fetch(`${API}/centers`, {
     cache: "no-store",
   });
@@ -27,11 +30,16 @@ export async function getCenterById(id: string) {
 }
 
 export async function createCenter(data: any) {
+
+  const { data: token } = await authClient.token();
   const res = await fetch(`${API}/centers`, {
+
+
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-    },
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${token}`,
+},
     body: JSON.stringify(data),
   });
 
@@ -50,11 +58,12 @@ export async function getMyCenters(email: string) {
 }
 
 export async function updateCenter(id: string, data: any) {
+  const { data: token } = await authClient.token();
   const res = await fetch(`${API}/centers/${id}`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
-    },
+    authorization: `Bearer ${token?.token}`,
+  },
     body: JSON.stringify(data),
   });
 
@@ -63,8 +72,12 @@ export async function updateCenter(id: string, data: any) {
 
 
 export async function deleteCenter(id: string) {
+  const { data: token } = await authClient.token();
   const res = await fetch(`${API}/centers/${id}`, {
     method: "DELETE",
+        headers: {
+    authorization: `Bearer ${token?.token}`,
+  },
   });
 
   return res.json();
