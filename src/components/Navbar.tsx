@@ -170,10 +170,10 @@ const Navbar = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <Link href="/login">
-                <Button href="/login" variant="bordered" className="rounded-xl">Login</Button>
+                <Button  variant="outline" className="rounded-xl">Login</Button>
               </Link>
               <Link href="/registration">
-                <Button href="/registration" color="primary" className="rounded-xl">Registration</Button>
+                <Button  className="rounded-xl">Registration</Button>
               </Link>
             </div>
 

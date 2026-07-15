@@ -82,7 +82,7 @@ const paginatedCenters = filteredCenters.slice(
       <div className="max-w-xl mx-auto mb-12">
         <Input
   placeholder="Search child care center..."
-  radius="lg"
+ 
   value={search}
   onChange={(e) => setSearch(e.target.value)}
 />

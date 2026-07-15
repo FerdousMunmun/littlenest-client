@@ -63,15 +63,19 @@ if (session.user.role !== "admin") {
 
   async function loadCenters() {
 
-    if (!session.user.email) return;
+  const email = session?.user?.email;
 
-    try {
-      const data = await getMyCenters(session.user.email);
-      setCenters(data);
-    } finally {
-      setLoading(false);
-    }
+  if (!email) return;
+
+  try {
+    const data = await getMyCenters(email);
+    setCenters(data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
   }
+}
 
   loadCenters();
 

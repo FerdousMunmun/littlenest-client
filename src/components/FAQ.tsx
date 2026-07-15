@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Accordion,
-  AccordionItem,
-} from "@heroui/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
 
 const faqs = [
   {
@@ -42,7 +43,7 @@ const faqs = [
 export default function FAQ() {
   return (
     <section className="py-24 bg-gradient-to-b from-rose-50 to-white">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -63,35 +64,43 @@ export default function FAQ() {
           </p>
         </motion.div>
 
-        <Accordion
-          variant="splitted"
-          selectionMode="multiple"
-          className="gap-5"
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          spaceBetween={25}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+          }}
         >
           {faqs.map((faq) => (
-            <AccordionItem
-              key={faq.id}
-              aria-label={faq.question}
-              title={
-                <div className="flex items-center gap-5">
+            <SwiperSlide key={faq.id}>
+              <div className="bg-white rounded-2xl shadow-lg p-8 h-full border hover:shadow-xl transition">
 
-                  <div className="w-11 h-11 rounded-full bg-rose-100 text-rose-600 font-bold flex items-center justify-center">
-                    {faq.id}
-                  </div>
-
-                  <h3 className="font-semibold text-lg">
-                    {faq.question}
-                  </h3>
-
+                <div className="w-14 h-14 rounded-full bg-rose-100 text-rose-600 font-bold flex items-center justify-center text-xl mb-6">
+                  {faq.id}
                 </div>
-              }
-            >
-              <p className="text-gray-600 leading-8 pl-16">
-                {faq.answer}
-              </p>
-            </AccordionItem>
+
+                <h3 className="text-xl font-bold mb-4">
+                  {faq.question}
+                </h3>
+
+                <p className="text-gray-600 leading-8">
+                  {faq.answer}
+                </p>
+
+              </div>
+            </SwiperSlide>
           ))}
-        </Accordion>
+        </Swiper>
 
       </div>
     </section>

@@ -42,17 +42,19 @@ export default function MyBookingsPage() {
   }
 
   async function loadBookings() {
-    if (!session.user.email) return;
+  const email = session?.user?.email;
 
-    try {
-      const data = await getMyBookings(session.user.email);
-      setBookings(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+  if (!email) return;
+
+  try {
+    const data = await getMyBookings(email);
+    setBookings(data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
   }
+}
 
   loadBookings();
 }, [session, router]);
