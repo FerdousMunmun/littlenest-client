@@ -164,138 +164,152 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { MapPin, Star, Loader2 } from "lucide-react";
+import {
+    UtensilsCrossed,
+    BookOpenText,
+    Stethoscope,
+    GraduationCap,
+    ShieldCheck,
+    Gamepad2,
+    Bus,
+    Camera,
+} from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL;
-
-interface Center {
-    _id: string;
-    name?: string;
-    image?: string;
-    address?: string;
-    description?: string;
-    rating?: number;
-    price?: number;
-}
+const facilities = [
+    {
+        icon: UtensilsCrossed,
+        title: "Nutritious Meals",
+        description:
+            "Freshly prepared, balanced meals and snacks every day, planned by nutrition experts to keep children healthy and energetic.",
+        color: "from-pink-500 to-rose-400",
+    },
+    {
+        icon: BookOpenText,
+        title: "Smart Classrooms",
+        description:
+            "Bright, well-equipped classrooms designed for age-appropriate learning, creativity, and hands-on activities.",
+        color: "from-orange-500 to-amber-400",
+    },
+    {
+        icon: Stethoscope,
+        title: "Medical Care",
+        description:
+            "On-site first aid and regular health checkups from qualified medical staff to ensure every child's safety and wellbeing.",
+        color: "from-rose-500 to-pink-400",
+    },
+    {
+        icon: GraduationCap,
+        title: "Qualified Teachers",
+        description:
+            "Experienced, caring, and certified teachers dedicated to guiding each child's growth with patience and expertise.",
+        color: "from-purple-500 to-pink-400",
+    },
+    {
+        icon: ShieldCheck,
+        title: "24/7 Security",
+        description:
+            "CCTV monitoring, secure entry systems, and trained staff to keep the environment completely safe at all times.",
+        color: "from-emerald-500 to-teal-400",
+    },
+    {
+        icon: Gamepad2,
+        title: "Play & Recreation",
+        description:
+            "Dedicated indoor and outdoor play areas that encourage physical activity, teamwork, and joyful learning.",
+        color: "from-sky-500 to-blue-400",
+    },
+    {
+        icon: Bus,
+        title: "Safe Transportation",
+        description:
+            "Reliable pickup and drop-off service with trained drivers and GPS tracking for complete peace of mind.",
+        color: "from-yellow-500 to-orange-400",
+    },
+    {
+        icon: Camera,
+        title: "Live Monitoring",
+        description:
+            "Parents can stay connected through live camera access, watching their little ones anytime during the day.",
+        color: "from-fuchsia-500 to-purple-400",
+    },
+];
 
 export default function AllFacilitiesPage() {
-    const [centers, setCenters] = useState<Center[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-
-    useEffect(() => {
-        const fetchCenters = async () => {
-            try {
-                const res = await fetch(`${API}/centers`);
-                const data = await res.json();
-                setCenters(Array.isArray(data) ? data : []);
-            } catch (err) {
-                console.log(err);
-                setError("Failed to load facilities");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCenters();
-    }, []);
-
     return (
         <div className="bg-gray-50 min-h-screen py-14 px-5">
             <div className="max-w-6xl mx-auto">
 
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <span className="inline-block bg-pink-100 text-pink-600 text-sm font-semibold px-4 py-1 rounded-full mb-4">
+                {/* Hero */}
+                <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-pink-100 via-rose-100 to-orange-100 px-6 py-16 text-center mb-16">
+                    <span className="inline-block bg-white text-pink-600 text-sm font-semibold px-4 py-1 rounded-full mb-4 shadow-sm">
                         Our Facilities
                     </span>
-                    <h1 className="text-4xl font-bold">
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
                         Everything Your Child{" "}
                         <span className="text-pink-500">Needs To Grow</span>
                     </h1>
-                    <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-                        Premium child care facilities — everything we offer to
-                        ensure comfort, safety, and development.
+                    <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+                        We provide a safe, nurturing, and engaging environment
+                        where every child can learn, play, and develop with
+                        confidence.
                     </p>
                 </div>
 
-                {/* Loading state */}
-                {loading && (
-                    <div className="flex justify-center items-center py-20">
-                        <Loader2 className="animate-spin text-pink-500" size={40} />
-                    </div>
-                )}
-
-                {/* Error state */}
-                {!loading && error && (
-                    <p className="text-center text-red-500">{error}</p>
-                )}
-
-                {/* Empty state */}
-                {!loading && !error && centers.length === 0 && (
-                    <p className="text-center text-gray-500">
-                        No facilities found right now.
+                {/* Section title */}
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold">
+                        Premium Child Care Facilities
+                    </h2>
+                    <p className="text-gray-500 mt-2">
+                        Everything we offer to ensure your child&apos;s
+                        comfort, safety, and development.
                     </p>
-                )}
+                </div>
 
-                {/* Grid */}
-                {!loading && !error && centers.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {centers.map((center) => (
+                {/* Facilities Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {facilities.map((facility, index) => {
+                        const Icon = facility.icon;
+                        return (
                             <div
-                                key={center._id}
-                                className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+                                key={index}
+                                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-6 text-center"
                             >
-                                <div className="h-44 w-full overflow-hidden bg-gradient-to-r from-pink-200 via-rose-200 to-orange-200">
-                                    <img
-                                        src={center.image || "/placeholder-center.jpg"}
-                                        alt={center.name || "Child Care Center"}
-                                        className="w-full h-full object-cover"
-                                    />
+                                <div
+                                    className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${facility.color} flex items-center justify-center mb-5 shadow-md`}
+                                >
+                                    <Icon className="text-white" size={28} />
                                 </div>
 
-                                <div className="p-6">
-                                    <h3 className="text-xl font-bold mb-2">
-                                        {center.name || "Unnamed Center"}
-                                    </h3>
+                                <h3 className="text-lg font-bold mb-2">
+                                    {facility.title}
+                                </h3>
 
-                                    {center.address && (
-                                        <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
-                                            <MapPin size={16} />
-                                            <span>{center.address}</span>
-                                        </div>
-                                    )}
-
-                                    {center.description && (
-                                        <p className="text-gray-500 text-sm line-clamp-2 mb-4">
-                                            {center.description}
-                                        </p>
-                                    )}
-
-                                    <div className="flex items-center justify-between mt-4">
-                                        {center.rating ? (
-                                            <div className="flex items-center gap-1 text-sm font-semibold text-yellow-500">
-                                                <Star size={16} fill="currentColor" />
-                                                {center.rating}
-                                            </div>
-                                        ) : (
-                                            <span />
-                                        )}
-
-                                        <Link
-                                            href={`/child-care-centers/${center._id}`}
-                                            className="text-pink-500 font-semibold text-sm hover:underline"
-                                        >
-                                            View Details →
-                                        </Link>
-                                    </div>
-                                </div>
+                                <p className="text-gray-500 text-sm leading-relaxed">
+                                    {facility.description}
+                                </p>
                             </div>
-                        ))}
-                    </div>
-                )}
+                        );
+                    })}
+                </div>
+
+                {/* CTA */}
+                <div className="mt-16 text-center bg-white rounded-3xl shadow-lg p-10">
+                    <h3 className="text-2xl font-bold mb-3">
+                        Ready to give your child the best start?
+                    </h3>
+                    <p className="text-gray-500 mb-6">
+                        Explore our verified child care centers and find the
+                        perfect fit for your family.
+                    </p>
+                    
+                        href="/child-care-centers"
+                        className="inline-block bg-pink-500 hover:bg-pink-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
+                    >
+                        Browse Child Care Centers
+                    </a>
+                </div>
+
             </div>
         </div>
     );
