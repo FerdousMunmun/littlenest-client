@@ -124,9 +124,14 @@ const Navbar = () => {
 </div>
                   {/* dropdown menu */}
                  {isAdmin && (
-  <Link href="/manage-my-centers" className="flex items-center gap-3 px-5 py-3 hover:bg-pink-50 transition">
+  <Link href="/manage-my-centers"
+       onClick={() => {
+    console.log("clicked");
+  }}
+
+  className="flex items-center gap-3 px-5 py-3 hover:bg-pink-50 transition">
     <User className="w-4 h-4  ml-2" />
-    Manage Centers
+    Manage My Centers
   </Link>
 )}
 
