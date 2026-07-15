@@ -303,9 +303,9 @@ export default function AllFacilitiesPage() {
                         perfect fit for your family.
                     </p>
                     
-                        href="/child-care-centers"
+                         <a> href="/child-care-centers"
                         className="inline-block bg-pink-500 hover:bg-pink-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
-                    >
+                  
                         Browse Child Care Centers
                     </a>
                 </div>
