@@ -45,8 +45,9 @@ export default function MyProfilePage() {
     const { data: session } = authClient.useSession();
 
     const user = session?.user;
+    console.log(user);
 
-
+console.log("PROFILE PAGE USER =>", user);
     return (
         <div className="bg-gray-50 min-h-screen py-14 px-5">
             <div className="max-w-5xl mx-auto">

@@ -38,7 +38,7 @@ export async function createCenter(data: any) {
     method: "POST",
     headers: {
   "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
+Authorization: `Bearer ${token?.token}`,
 },
     body: JSON.stringify(data),
   });
@@ -62,6 +62,7 @@ export async function updateCenter(id: string, data: any) {
   const res = await fetch(`${API}/centers/${id}`, {
     method: "PATCH",
     headers: {
+       "Content-Type": "application/json",
     authorization: `Bearer ${token?.token}`,
   },
     body: JSON.stringify(data),
@@ -76,6 +77,7 @@ export async function deleteCenter(id: string) {
   const res = await fetch(`${API}/centers/${id}`, {
     method: "DELETE",
         headers: {
+           "Content-Type": "application/json",
     authorization: `Bearer ${token?.token}`,
   },
   });

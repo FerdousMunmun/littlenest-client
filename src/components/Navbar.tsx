@@ -92,7 +92,8 @@ const Navbar = () => {
                   />
                   <div className="text-left hidden lg:block">
                     <p className="text-sm font-bold truncate max-w-25">
-                      {user?.name || "User"}
+                      {/* {user?.name || "User"} */}
+                        TEST: {session?.user?.name}
                     </p>
 
                   </div>
