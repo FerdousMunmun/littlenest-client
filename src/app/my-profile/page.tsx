@@ -14,40 +14,73 @@ export default function MyProfilePage() {
     const [openEdit, setOpenEdit] = useState(false);
     const [name, setName] = useState("");
     const [imageFile, setImageFile] = useState<File | null>(null);
+    // const handleUpdateProfile = async () => {
+    //     try {
+    //         let imageUrl = user?.image;
+
+    //         if (imageFile) {
+    //             imageUrl = await uploadImage(imageFile);
+    //         }
+
+    //         const result = await updateProfile(user!.id, {
+    //             name,
+    //             image: imageUrl,
+    //         });
+
+    //         if (result.modifiedCount > 0) {
+    //             toast.success("Profile Updated Successfully");
+
+    //             setOpenEdit(false);
+
+    //             window.location.reload();
+    //         } else {
+    //             toast.error("Nothing Updated");
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+
+    //         toast.error("Update Failed");
+    //     }
+    // };
+
+
+
+
+
+
+
+
     const handleUpdateProfile = async () => {
-        try {
-            let imageUrl = user?.image;
+    try {
+        let imageUrl = user?.image;
 
-            if (imageFile) {
-                imageUrl = await uploadImage(imageFile);
-            }
-
-            const result = await updateProfile(user!.id, {
-                name,
-                image: imageUrl,
-            });
-
-            if (result.modifiedCount > 0) {
-                toast.success("Profile Updated Successfully");
-
-                setOpenEdit(false);
-
-                window.location.reload();
-            } else {
-                toast.error("Nothing Updated");
-            }
-        } catch (error) {
-            console.log(error);
-
-            toast.error("Update Failed");
+        if (imageFile) {
+            imageUrl = await uploadImage(imageFile);
         }
-    };
+
+        const { data, error } = await authClient.updateUser({
+            name,
+            image: imageUrl,
+        });
+
+        if (error) {
+            toast.error(error.message || "Update Failed");
+            return;
+        }
+
+        toast.success("Profile Updated Successfully");
+        setOpenEdit(false);
+        window.location.reload();
+    } catch (error) {
+        console.log(error);
+        toast.error("Update Failed");
+    }
+};
     const { data: session } = authClient.useSession();
 
     const user = session?.user;
-    console.log(user);
+    
 
-console.log("PROFILE PAGE USER =>", user);
     return (
         <div className="bg-gray-50 min-h-screen py-14 px-5">
             <div className="max-w-5xl mx-auto">
@@ -77,6 +110,7 @@ console.log("PROFILE PAGE USER =>", user);
 
                         <h2 className="text-3xl font-bold text-center mt-5">
                             {user?.name}
+                            
                         </h2>
 
                         <p className="text-center text-gray-500 mt-2">
