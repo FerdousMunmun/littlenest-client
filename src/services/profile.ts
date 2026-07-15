@@ -8,6 +8,7 @@ export async function updateProfile(id: string, data: any) {
     method: "PATCH",
      headers: {
     authorization: `Bearer ${token?.token}`,
+     "Content-Type": "application/json"
   },
     body: JSON.stringify(data),
   });
