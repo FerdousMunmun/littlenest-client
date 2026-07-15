@@ -46,13 +46,14 @@ export default function MyBookingsPage() {
   }
 
   loadBookings();
-}, [session]); {
-    return (
-      <div className="py-24 text-center text-xl font-semibold">
-        Loading...
-      </div>
-    );
-  }
+}, [session]); 
+if (loading) {
+  return (
+    <div className="py-24 text-center text-xl font-semibold">
+      Loading...
+    </div>
+  );
+}
 
   return (
     <div className="max-w-7xl mx-auto px-5 py-16">
